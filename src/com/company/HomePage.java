@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 
 public class HomePage {
     String name;
@@ -11,7 +13,6 @@ public class HomePage {
     JPanel jp[] = new JPanel[10];
     JLabel jlb[] = new JLabel[10];
     JButton jbt[] = new JButton[4];
-
 
     public HomePage(String username) {
         this.name = username;
@@ -89,14 +90,28 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jf.dispose();
-                String[] board = {"0", "0", "16", "2", "0", "2", "16", "2", "2", "4", "2", "32", "2", "8", "4", "2"};
-                //TODO 从服务器上下载棋盘数据
-                for( int i = 0; i < 16; i++ ) {
-                    if( board[i].equals("0") ) board[i] = "";
+                try {
+                    FileInputStream fis=new FileInputStream(name+".txt");
+                    BufferedInputStream bis=new BufferedInputStream(fis);
+                    StringBuilder content= new StringBuilder();
+                    //自定义缓冲区
+                    byte[] buffer=new byte[10240];
+                    int flag=0;
+                    while((flag=bis.read(buffer))!=-1){
+                        assert false;
+                        content.append(new String(buffer, 0, flag));
+                    }
+                    bis.close();
+
+                    String[] board = content.toString().split(" ");
+                    for( int i = 0; i < 16; i++ ) {
+                        if( board[i].equals("0") ) board[i] = "";
+                    }
+                    Game2048 game = new Game2048(name);
+                    game.Load(board, name);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
-                Game2048 game = new Game2048(name);
-                game.Load(board, name);
-                System.out.println("not finished");
             }
         });
 

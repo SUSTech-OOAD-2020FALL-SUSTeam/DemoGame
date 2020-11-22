@@ -2,6 +2,9 @@ package com.company;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Random;
 import javax.swing.*;
 public class Game2048 implements KeyListener,ActionListener
@@ -126,10 +129,6 @@ public class Game2048 implements KeyListener,ActionListener
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] savedBoard = Save(name);
-                System.out.println("not finished");
-                for( int i = 0; i < 16; i++ ) {
-                    System.out.print("\""+savedBoard[i]+"\", ");
-                }
                 //TODO 上传数据到云存储
             }
         });
@@ -618,11 +617,27 @@ public class Game2048 implements KeyListener,ActionListener
     }
 
     public String[] Save(String name) {
-        //TODO
         String[] result = new String[16];
+        String storeStuff = "";
         for( int i = 0; i < 16; i++ ) {
             result[i] = jlb[i].getText();
             if( result[i].equals("") ) result[i] = "0";
+            if( i != 0 ) storeStuff = storeStuff + " ";
+            storeStuff = storeStuff + result[i];
+        }
+        try {
+            String filename = name + ".txt";
+            File file = new File(filename);
+            if( !file.exists() ) {
+                file.createNewFile();
+            }
+            FileOutputStream fos=new FileOutputStream(file);
+            BufferedOutputStream bos=new BufferedOutputStream(fos);
+            bos.write(storeStuff.getBytes(),0,storeStuff.getBytes().length);
+            bos.flush();
+            bos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }
