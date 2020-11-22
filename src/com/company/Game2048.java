@@ -613,6 +613,8 @@ public class Game2048 implements KeyListener,ActionListener
         for( int i = 0; i < 16; i++ ) {
             jlb[i].setText(board[i]);
         }
+        int score = getScore();
+        jlt.setText("当前得分: "+score);
         colorTiles();
     }
 
