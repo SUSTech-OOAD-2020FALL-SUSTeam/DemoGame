@@ -11,18 +11,10 @@ public class Main {
 
         if (args.length > 0) {
             token = args[0];
-            System.out.println(token);
         }
 
-        SusteamSdk.init(token);
-        SusteamSdk.user().onFailure(it -> {
-            it.printStackTrace();
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    new HomePage("unauthorized user");
-                }
-            });
-        }).onSuccess(it -> {
+        SusteamSdk.init(token, 10);
+        SusteamSdk.user().onFailure(Throwable::printStackTrace).onSuccess(it -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     new HomePage(it.getUsername());

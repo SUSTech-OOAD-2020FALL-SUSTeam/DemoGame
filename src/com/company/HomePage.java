@@ -1,5 +1,7 @@
 package com.company;
 
+import susteam.sdk.SusteamSdk;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -90,28 +92,15 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jf.dispose();
-                try {
-                    FileInputStream fis=new FileInputStream(name+".txt");
-                    BufferedInputStream bis=new BufferedInputStream(fis);
-                    StringBuilder content= new StringBuilder();
-                    //自定义缓冲区
-                    byte[] buffer=new byte[10240];
-                    int flag=0;
-                    while((flag=bis.read(buffer))!=-1){
-                        assert false;
-                        content.append(new String(buffer, 0, flag));
-                    }
-                    bis.close();
-
-                    String[] board = content.toString().split(" ");
-                    for( int i = 0; i < 16; i++ ) {
-                        if( board[i].equals("0") ) board[i] = "";
-                    }
-                    Game2048 game = new Game2048(name);
-                    game.Load(board, name);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+                SusteamSdk.getAllGameSaveName().onComplete( it -> {
+                        jf.dispose();
+                        SwingUtilities.invokeLater(new Runnable(){
+                            public void run()
+                            {
+                                new showSaves(name,it.result(),0);
+                            }
+                        });
+                });
             }
         });
 
@@ -119,7 +108,6 @@ public class HomePage {
         jbt[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jf.dispose();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run()
                     {

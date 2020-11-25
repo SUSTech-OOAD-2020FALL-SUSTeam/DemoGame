@@ -1,11 +1,14 @@
 package com.company;
 
 import susteam.sdk.GameSave;
+import susteam.sdk.SusteamSdk;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.time.Instant;
 
 public class showSaves {
@@ -15,13 +18,6 @@ public class showSaves {
     JPanel jp[] = new JPanel[30];
     JButton jbt[] = new JButton[30];
 
-    public static void main(String[] args) {
-        GameSave[] saves = new GameSave[13];
-        for( int i = 0; i < saves.length; i++ ) {
-            saves[i] = new GameSave("test00"+i,10,"test"+i+".txt", Instant.now());
-        }
-        showSaves s = new showSaves("admin", saves, 0);
-    }
     public showSaves(String name, GameSave[] saves, int index) {
         this.name = name;
         jf = new JFrame("2048");
@@ -45,7 +41,7 @@ public class showSaves {
             jf.add(jp[i]);
         }
 
-        Font f = new Font("Serif",Font.BOLD,40);
+        Font f = new Font("Serif",Font.BOLD,27);
         Font f2 = new Font("宋体",Font.BOLD,32);
         for( int i = index; i < Math.min(index+5, saves.length); i++ ) {
             int cur = i-index;
@@ -57,7 +53,9 @@ public class showSaves {
             jlb[i].setForeground(Color.YELLOW);
             jlb[i].setFont(f);
             jp[cur*3].add(jlb[i]);
-            jlb[i].setText(saves[i].getSaveName());
+            String[] saveTime = saves[i].getSaveName().split("T");
+            jlb[i].setText(saveTime[0]+" "+ saveTime[1].replace("-",":"));
+            int finalI = i;
 
             jbt[i*2] = new JButton("删除");
             jbt[i*2].setSize(100, 100);
@@ -66,6 +64,17 @@ public class showSaves {
             jbt[i*2].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    SusteamSdk.deleteSave(saves[finalI].getSaveName()).onComplete(it1 -> {
+                        SusteamSdk.getAllGameSaveName().onComplete( it -> {
+                            jf.dispose();
+                            SwingUtilities.invokeLater(new Runnable(){
+                                public void run()
+                                {
+                                    new showSaves(name,it.result(),0);
+                                }
+                            });
+                        });
+                    });
                 }
             });
             jp[cur*3+1].add(jbt[i*2]);
@@ -76,6 +85,33 @@ public class showSaves {
             jbt[i*2+1].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    SusteamSdk.load(saves[finalI].getSaveName()).onComplete(it -> {
+                        jf.dispose();
+                        try {
+                            String address = System.getProperty("java.io.tmpdir")+"susteam/sdk/10/"+saves[finalI].getSaveName();
+                            FileInputStream fis=new FileInputStream(address);
+                            BufferedInputStream bis=new BufferedInputStream(fis);
+                            StringBuilder content= new StringBuilder();
+                            //自定义缓冲区
+                            byte[] buffer=new byte[10240];
+                            int flag=0;
+                            while((flag=bis.read(buffer))!=-1){
+                                assert false;
+                                content.append(new String(buffer, 0, flag));
+                            }
+                            bis.close();
+
+                            String[] board = content.toString().split(" ");
+                            for( int i = 0; i < 16; i++ ) {
+                                if( board[i].equals("0") ) board[i] = "";
+                            }
+                            Game2048 game = new Game2048(name);
+                            game.Load(board, name);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                    });
+
                 }
             });
             jp[cur*3+2].add(jbt[i*2+1]);

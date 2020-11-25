@@ -1,10 +1,13 @@
 package com.company;
 
+import susteam.sdk.SusteamSdk;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.Instant;
 import java.util.Random;
 import javax.swing.*;
 public class Game2048 implements KeyListener,ActionListener
@@ -128,7 +131,7 @@ public class Game2048 implements KeyListener,ActionListener
         jbt[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String[] savedBoard = Save(name);
+                String[] savedBoard = Save();
                 //TODO 上传数据到云存储
             }
         });
@@ -605,7 +608,6 @@ public class Game2048 implements KeyListener,ActionListener
     }
 
     public void Load(String[] board, String name) {
-        //TODO
         leftMovable =true;
         rightMovable=true;
         upMovable=true;
@@ -618,7 +620,7 @@ public class Game2048 implements KeyListener,ActionListener
         colorTiles();
     }
 
-    public String[] Save(String name) {
+    public String[] Save() {
         String[] result = new String[16];
         String storeStuff = "";
         for( int i = 0; i < 16; i++ ) {
@@ -628,7 +630,10 @@ public class Game2048 implements KeyListener,ActionListener
             storeStuff = storeStuff + result[i];
         }
         try {
-            String filename = name + ".txt";
+            String filename =
+                    Instant.now().plusSeconds(8*60*60).toString()
+                            .replace(".","T")
+                            .replace(":","-") + ".txt";
             File file = new File(filename);
             if( !file.exists() ) {
                 file.createNewFile();
@@ -638,6 +643,7 @@ public class Game2048 implements KeyListener,ActionListener
             bos.write(storeStuff.getBytes(),0,storeStuff.getBytes().length);
             bos.flush();
             bos.close();
+            SusteamSdk.save(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
