@@ -633,7 +633,7 @@ public class Game2048 implements KeyListener,ActionListener
             String filename =
                     Instant.now().plusSeconds(8*60*60).toString()
                             .replace(".","T")
-                            .replace(":","-") + ".txt";
+                            .replace(":","-") + "_" + getScore() + ".txt";
             File file = new File(filename);
             if( !file.exists() ) {
                 file.createNewFile();

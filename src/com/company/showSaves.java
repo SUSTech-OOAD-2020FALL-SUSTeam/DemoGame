@@ -14,7 +14,7 @@ import java.time.Instant;
 public class showSaves {
     String name;
     JFrame jf;
-    JLabel jlb[] = new JLabel[30];
+    JLabel jlb[] = new JLabel[60];
     JPanel jp[] = new JPanel[30];
     JButton jbt[] = new JButton[30];
 
@@ -52,9 +52,31 @@ public class showSaves {
             jlb[i].setLayout(new GridBagLayout());
             jlb[i].setForeground(Color.YELLOW);
             jlb[i].setFont(f);
+            jlb[59 - i] = new JLabel("");
+            jlb[59 - i].setLayout(new GridBagLayout());
+            jlb[59 - i].setForeground(Color.RED);
+            jlb[59 - i].setFont(f);
+            GridBagLayout layout = new GridBagLayout();
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            constraints.gridwidth = 100;
+            constraints.gridheight = 20;
+            layout.setConstraints(jlb[i], constraints);
+            constraints.gridx = 0;
+            constraints.gridy = 25;
+            constraints.gridwidth = 100;
+            constraints.gridheight = 20;
+            layout.setConstraints(jlb[59-i], constraints);
+            jp[cur*3].setLayout(layout);
             jp[cur*3].add(jlb[i]);
-            String[] saveTime = saves[i].getSaveName().split("T");
+            jp[cur*3].add(jlb[59-i]);
+
+            String[] save  = saves[i].getSaveName().split("_");
+            String score = save[1].split("\\.")[0];
+            String[] saveTime = save[0].split("T");
             jlb[i].setText(saveTime[0]+" "+ saveTime[1].replace("-",":"));
+            jlb[59 - i].setText("得分: " + score);
             int finalI = i;
 
             jbt[i*2] = new JButton("删除");
