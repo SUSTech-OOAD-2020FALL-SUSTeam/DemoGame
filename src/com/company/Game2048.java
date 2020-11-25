@@ -365,6 +365,8 @@ public class Game2048 implements KeyListener,ActionListener
         {
             jlb[i].setText("");
         }
+        int score = getScore();
+        jlt.setText("当前得分: "+score);
         colorTiles();
         Random r = new Random();
         int i = r.nextInt(16);
