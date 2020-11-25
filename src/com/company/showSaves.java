@@ -14,7 +14,7 @@ import java.time.Instant;
 public class showSaves {
     String name;
     JFrame jf;
-    JLabel jlb[] = new JLabel[60];
+    JLabel jlb[] = new JLabel[30];
     JPanel jp[] = new JPanel[30];
     JButton jbt[] = new JButton[30];
 
@@ -48,42 +48,42 @@ public class showSaves {
             jp[cur*3].setBounds(15,100+cur*115,255,100);
             jp[cur*3+1].setBounds(285,100+cur*115,120,100);
             jp[cur*3+2].setBounds(420, 100+cur*115, 120, 100);
-            jlb[i] = new JLabel("");
-            jlb[i].setLayout(new GridBagLayout());
-            jlb[i].setForeground(Color.YELLOW);
-            jlb[i].setFont(f);
-            jlb[59 - i] = new JLabel("");
-            jlb[59 - i].setLayout(new GridBagLayout());
-            jlb[59 - i].setForeground(Color.RED);
-            jlb[59 - i].setFont(f);
+            jlb[cur] = new JLabel("");
+            jlb[cur].setLayout(new GridBagLayout());
+            jlb[cur].setForeground(Color.YELLOW);
+            jlb[cur].setFont(f);
+            jlb[cur+10] = new JLabel("");
+            jlb[cur+10].setLayout(new GridBagLayout());
+            jlb[cur+10].setForeground(Color.WHITE);
+            jlb[cur+10].setFont(f);
             GridBagLayout layout = new GridBagLayout();
             GridBagConstraints constraints = new GridBagConstraints();
             constraints.gridx = 0;
             constraints.gridy = 0;
             constraints.gridwidth = 100;
             constraints.gridheight = 20;
-            layout.setConstraints(jlb[i], constraints);
+            layout.setConstraints(jlb[cur], constraints);
             constraints.gridx = 0;
             constraints.gridy = 25;
             constraints.gridwidth = 100;
             constraints.gridheight = 20;
-            layout.setConstraints(jlb[59-i], constraints);
+            layout.setConstraints(jlb[cur+10], constraints);
             jp[cur*3].setLayout(layout);
-            jp[cur*3].add(jlb[i]);
-            jp[cur*3].add(jlb[59-i]);
+            jp[cur*3].add(jlb[cur]);
+            jp[cur*3].add(jlb[cur+10]);
 
             String[] save  = saves[i].getSaveName().split("_");
             String score = save[1].split("\\.")[0];
             String[] saveTime = save[0].split("T");
-            jlb[i].setText(saveTime[0]+" "+ saveTime[1].replace("-",":"));
-            jlb[59 - i].setText("得分: " + score);
+            jlb[cur].setText(saveTime[0]+" "+ saveTime[1].replace("-",":"));
+            jlb[cur+10].setText("得分: " + score);
             int finalI = i;
 
-            jbt[i*2] = new JButton("删除");
-            jbt[i*2].setSize(100, 100);
-            jbt[i*2].setForeground(Color.BLACK);
-            jbt[i*2].setFont(f2);
-            jbt[i*2].addActionListener(new ActionListener() {
+            jbt[cur*2] = new JButton("删除");
+            jbt[cur*2].setSize(100, 100);
+            jbt[cur*2].setForeground(Color.BLACK);
+            jbt[cur*2].setFont(f2);
+            jbt[cur*2].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     SusteamSdk.deleteSave(saves[finalI].getSaveName()).onComplete(it1 -> {
@@ -99,12 +99,12 @@ public class showSaves {
                     });
                 }
             });
-            jp[cur*3+1].add(jbt[i*2]);
-            jbt[i*2+1] = new JButton("选择");
-            jbt[i*2+1].setSize(100, 100);
-            jbt[i*2+1].setForeground(Color.BLACK);
-            jbt[i*2+1].setFont(f2);
-            jbt[i*2+1].addActionListener(new ActionListener() {
+            jp[cur*3+1].add(jbt[cur*2]);
+            jbt[cur*2+1] = new JButton("选择");
+            jbt[cur*2+1].setSize(100, 100);
+            jbt[cur*2+1].setForeground(Color.BLACK);
+            jbt[cur*2+1].setFont(f2);
+            jbt[cur*2+1].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     SusteamSdk.load(saves[finalI].getSaveName()).onComplete(it -> {
@@ -124,8 +124,8 @@ public class showSaves {
                             bis.close();
 
                             String[] board = content.toString().split(" ");
-                            for( int i = 0; i < 16; i++ ) {
-                                if( board[i].equals("0") ) board[i] = "";
+                            for( int j = 0; j < 16; j++ ) {
+                                if( board[j].equals("0") ) board[j] = "";
                             }
                             Game2048 game = new Game2048(name);
                             game.Load(board, name);
@@ -136,7 +136,7 @@ public class showSaves {
 
                 }
             });
-            jp[cur*3+2].add(jbt[i*2+1]);
+            jp[cur*3+2].add(jbt[cur*2+1]);
         }
 
         jp[21].setBounds(5,675,180,100);

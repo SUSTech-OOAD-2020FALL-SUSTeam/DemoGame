@@ -91,7 +91,6 @@ public class HomePage {
         jbt[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jf.dispose();
                 SusteamSdk.getAllGameSaveName().onComplete( it -> {
                         jf.dispose();
                         SwingUtilities.invokeLater(new Runnable(){
