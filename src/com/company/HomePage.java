@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.util.Arrays;
 
 public class HomePage {
     String name;
@@ -103,15 +104,18 @@ public class HomePage {
             }
         });
 
-        jbt[2].setText("排行");
+        jbt[2].setText("成就");
         jbt[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(new Runnable(){
-                    public void run()
-                    {
-                        new Rank(name);
-                    }
+                SusteamSdk.getAllAchievement().onComplete( it -> {
+                    jf.dispose();
+                    SwingUtilities.invokeLater(new Runnable(){
+                        public void run()
+                        {
+                            new showAchievements(name,it.result(),0);
+                        }
+                    });
                 });
             }
         });
