@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.time.Instant;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
 public class Game2048 implements KeyListener,ActionListener
 {
@@ -169,6 +170,50 @@ public class Game2048 implements KeyListener,ActionListener
         }
 
         int score = getScore();
+        if (score == 20) {
+            AtomicInteger progress = new AtomicInteger();
+            SusteamSdk.getUserAchievementProcess("小试牛刀").onComplete( it -> {
+                if (it.result() != null) {
+                    progress.set(it.result());
+                }
+                SusteamSdk.updateUserAchievementProcess("小试牛刀", progress.get() + 1);
+            });
+        }
+        else if (score == 100) {
+            AtomicInteger progress = new AtomicInteger();
+            SusteamSdk.getUserAchievementProcess("初露锋芒").onComplete( it -> {
+                if (it.result() != null) {
+                    progress.set(it.result());
+                }
+                SusteamSdk.updateUserAchievementProcess("初露锋芒", progress.get() + 1);
+            });
+        }
+        else if (score == 1000) {
+            AtomicInteger progress = new AtomicInteger();
+            SusteamSdk.getUserAchievementProcess("大展身手").onComplete( it -> {
+                if (it.result() != null) {
+                    progress.set(it.result());
+                }
+                SusteamSdk.updateUserAchievementProcess("大展身手", progress.get() + 1);
+            });
+        }
+        else if (score == 5000) {
+            AtomicInteger progress = new AtomicInteger();
+            SusteamSdk.getUserAchievementProcess("炉火纯青").onComplete( it -> {
+                if (it.result() != null) {
+                    progress.set(it.result());
+                }
+                SusteamSdk.updateUserAchievementProcess("炉火纯青", progress.get() + 1);
+            });
+
+            AtomicInteger progress1 = new AtomicInteger();
+            SusteamSdk.getUserAchievementProcess("登峰造极").onComplete( it -> {
+                if (it.result() != null) {
+                    progress1.set(it.result());
+                }
+                SusteamSdk.updateUserAchievementProcess("登峰造极", progress1.get() + 1);
+            });
+        }
         jlt.setText("当前得分: "+score);
         if(!leftMovable && !rightMovable && !upMovable && !downMovable)
         {

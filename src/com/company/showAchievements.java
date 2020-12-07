@@ -69,12 +69,20 @@ public class showAchievements {
             String achievementDescription = achievements[i].getDescription();
             jlb[cur + 10].setText(achievementDescription);
 
+            AtomicInteger achieveCount =  new AtomicInteger(achievements[i].getAchieveCount());
             AtomicInteger progress = new AtomicInteger();
-            SusteamSdk.getUserAchievementProcess(achievements[i]).onComplete( it -> {
-                progress.set(it.result());
+            SusteamSdk.getUserAchievementProcess(achievements[i].getAchievementName()).onComplete( it -> {
+                if (it.result() != null) {
+                    progress.set(it.result());
+                }
+                if (progress.get() >= achieveCount.get()) {
+                    jlb[cur + 20].setText("已完成");
+                    jlb[cur + 20].setForeground(Color.GREEN);
+                } else {
+                    jlb[cur + 20].setText(progress + "/" + achieveCount);
+                    jlb[cur + 20].setForeground(Color.RED);
+                }
             });
-
-            jlb[cur + 20].setText(progress + "/" + achievements[i].getAchieveCount());
             int finalI = i;
 
         }
@@ -140,11 +148,11 @@ public class showAchievements {
 
         jp[24].setBounds(150, 0, 255, 100);
         jp[24].setBackground(new Color(51, 51, 51));
-        jlb[24] = new JLabel("", JLabel.CENTER);
+        jlb[29] = new JLabel("", JLabel.CENTER);
         Font f3 = new Font("Serif", Font.BOLD, 60);
-        jlb[24].setForeground(Color.YELLOW);
-        jlb[24].setFont(f3);
-        jp[24].add(jlb[24]);
-        jlb[24].setText("游戏存档");
+        jlb[29].setForeground(Color.ORANGE);
+        jlb[29].setFont(f3);
+        jp[24].add(jlb[29]);
+        jlb[29].setText("成就系统");
     }
 }
