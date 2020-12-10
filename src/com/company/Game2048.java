@@ -368,8 +368,17 @@ public class Game2048 implements KeyListener, ActionListener {
             do {
                 i = r.nextInt(16);
             } while (!jlb[i].getText().equals(""));
-            jlb[i].setText("2");
-            colorTiles();
+            Random random = new Random();
+            int possibilityOfTwo = 75;
+            if (random.nextInt(100) < possibilityOfTwo) {
+                jlb[i].setText("2");
+                colorTiles();
+            }
+            else {
+                jlb[i].setText("4");
+                colorTiles();
+            }
+
         }
         movable();
         if (!flag && !upMovable && !downMovable && !rightMovable && !leftMovable) {
@@ -646,6 +655,8 @@ public class Game2048 implements KeyListener, ActionListener {
             bos.flush();
             bos.close();
             SusteamSdk.save(file);
+            notifySaved();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -660,4 +671,46 @@ public class Game2048 implements KeyListener, ActionListener {
     public void recordScore(int score, String username) {
         //TODO
     }
+
+    public void notifySaved(){
+        JFrame jframe = new JFrame("提示");
+        jframe.setSize(300, 150);
+        jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jframe.setLocationRelativeTo(null);
+        jframe.setVisible(true);
+        jframe.setLayout(null);
+
+        JPanel jPanel = new JPanel();
+        jPanel.setSize(300,150);
+        jPanel.setLayout(null);
+        jPanel.setBackground(new Color(51, 51, 51));
+        jPanel.setOpaque(true);
+        jframe.add(jPanel);
+
+        Font f1 = new Font("宋体", Font.BOLD, 30);
+        Font f2 = new Font("宋体", Font.BOLD, 10);
+
+        JLabel jLabel = new JLabel("保存成功");
+        jLabel.setVisible(true);
+        jLabel.setBounds(70, 15, 150, 40);
+        jLabel.setForeground(Color.WHITE);
+        jLabel.setFont(f1);
+        jPanel.add(jLabel);
+
+        JButton jButton = new JButton("确定");
+        jButton.setVisible(true);
+        jButton.setBounds(100, 85, 60, 20);
+        jButton.setForeground(Color.BLACK);
+        jButton.setFont(f2);
+        jButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jframe.dispose();
+            }
+        });
+        jPanel.add(jButton);
+
+    }
+
 }
+
