@@ -138,12 +138,14 @@ public class Game2048 implements KeyListener, ActionListener {
         }
         Random r = new Random();
         int i = r.nextInt(16);
-        jlb[i].setText("2");
+        if( Math.random() < 0.9 ) jlb[i].setText("2");
+        else jlb[i].setText("4");
         int j;
         do {
             j = r.nextInt(16);
         } while (i == j);
-        jlb[j].setText("2");
+        if( Math.random() < 0.9 ) jlb[j].setText("2");
+        else jlb[j].setText("4");
         colorTiles();
 
 
@@ -369,7 +371,7 @@ public class Game2048 implements KeyListener, ActionListener {
                 i = r.nextInt(16);
             } while (!jlb[i].getText().equals(""));
             Random random = new Random();
-            int possibilityOfTwo = 75;
+            int possibilityOfTwo = 90;
             if (random.nextInt(100) < possibilityOfTwo) {
                 jlb[i].setText("2");
                 colorTiles();
@@ -406,12 +408,14 @@ public class Game2048 implements KeyListener, ActionListener {
         colorTiles();
         Random r = new Random();
         int i = r.nextInt(16);
-        jlb[i].setText("2");
+        if( Math.random() < 0.9 ) jlb[i].setText("2");
+        else jlb[i].setText("4");
         int j;
         do {
             j = r.nextInt(16);
         } while (i == j);
-        jlb[j].setText("2");
+        if( Math.random() < 0.9 ) jlb[j].setText("2");
+        else jlb[j].setText("4");
         colorTiles();
     }
 
@@ -612,7 +616,14 @@ public class Game2048 implements KeyListener, ActionListener {
         for (int i = 0; i < 16; i++) {
             String temp = jlb[i].getText();
             if (!temp.equals("")) {
-                res += Integer.parseInt(temp);
+                int scor = Integer.parseInt(temp);
+                int tem = scor;
+                int n = 0;
+                while(tem > 1 ) {
+                    n++;
+                    tem /= 2;
+                }
+                res += (n-1)*scor;
             }
         }
         return res;
