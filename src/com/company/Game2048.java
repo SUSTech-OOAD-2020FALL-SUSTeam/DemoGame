@@ -129,7 +129,7 @@ public class Game2048 implements KeyListener, ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] savedBoard = Save();
-                //TODO 上传数据到云存储
+                jf.requestFocus();
             }
         });
 
@@ -138,13 +138,13 @@ public class Game2048 implements KeyListener, ActionListener {
         }
         Random r = new Random();
         int i = r.nextInt(16);
-        if( Math.random() < 0.9 ) jlb[i].setText("2");
+        if (Math.random() < 0.9) jlb[i].setText("2");
         else jlb[i].setText("4");
         int j;
         do {
             j = r.nextInt(16);
         } while (i == j);
-        if( Math.random() < 0.9 ) jlb[j].setText("2");
+        if (Math.random() < 0.9) jlb[j].setText("2");
         else jlb[j].setText("4");
         colorTiles();
 
@@ -375,8 +375,7 @@ public class Game2048 implements KeyListener, ActionListener {
             if (random.nextInt(100) < possibilityOfTwo) {
                 jlb[i].setText("2");
                 colorTiles();
-            }
-            else {
+            } else {
                 jlb[i].setText("4");
                 colorTiles();
             }
@@ -408,13 +407,13 @@ public class Game2048 implements KeyListener, ActionListener {
         colorTiles();
         Random r = new Random();
         int i = r.nextInt(16);
-        if( Math.random() < 0.9 ) jlb[i].setText("2");
+        if (Math.random() < 0.9) jlb[i].setText("2");
         else jlb[i].setText("4");
         int j;
         do {
             j = r.nextInt(16);
         } while (i == j);
-        if( Math.random() < 0.9 ) jlb[j].setText("2");
+        if (Math.random() < 0.9) jlb[j].setText("2");
         else jlb[j].setText("4");
         colorTiles();
     }
@@ -619,11 +618,11 @@ public class Game2048 implements KeyListener, ActionListener {
                 int scor = Integer.parseInt(temp);
                 int tem = scor;
                 int n = 0;
-                while(tem > 1 ) {
+                while (tem > 1) {
                     n++;
                     tem /= 2;
                 }
-                res += (n-1)*scor;
+                res += (n - 1) * scor;
             }
         }
         return res;
@@ -683,7 +682,7 @@ public class Game2048 implements KeyListener, ActionListener {
         //TODO
     }
 
-    public void notifySaved(){
+    public void notifySaved() {
         JFrame jframe = new JFrame("提示");
         jframe.setSize(300, 150);
         jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -692,7 +691,7 @@ public class Game2048 implements KeyListener, ActionListener {
         jframe.setLayout(null);
 
         JPanel jPanel = new JPanel();
-        jPanel.setSize(300,150);
+        jPanel.setSize(300, 150);
         jPanel.setLayout(null);
         jPanel.setBackground(new Color(51, 51, 51));
         jPanel.setOpaque(true);
