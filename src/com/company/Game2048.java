@@ -153,6 +153,7 @@ public class Game2048 implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int pre_score = getScore();
         if (e.getKeyCode() == KeyEvent.VK_UP && upMovable) {
             upMove();
             colorTiles();
@@ -175,7 +176,7 @@ public class Game2048 implements KeyListener, ActionListener {
         }
 
         int score = getScore();
-        if (score == 20) {
+        if (pre_score < 20 && score >= 20) {
             AtomicInteger progress = new AtomicInteger();
             SusteamSdk.getUserAchievementProcess("小试牛刀").onComplete(it -> {
                 if (it.result() != null) {
@@ -183,7 +184,7 @@ public class Game2048 implements KeyListener, ActionListener {
                     SusteamSdk.updateUserAchievementProcess("小试牛刀", progress.get() + 1);
                 }
             });
-        } else if (score == 100) {
+        } else if (pre_score < 100 && score == 100) {
             AtomicInteger progress = new AtomicInteger();
             SusteamSdk.getUserAchievementProcess("初露锋芒").onComplete(it -> {
                 if (it.result() != null) {
@@ -191,7 +192,7 @@ public class Game2048 implements KeyListener, ActionListener {
                     SusteamSdk.updateUserAchievementProcess("初露锋芒", progress.get() + 1);
                 }
             });
-        } else if (score == 1000) {
+        } else if (pre_score < 1000 && score == 1000) {
             AtomicInteger progress = new AtomicInteger();
             SusteamSdk.getUserAchievementProcess("大展身手").onComplete(it -> {
                 if (it.result() != null) {
@@ -199,7 +200,7 @@ public class Game2048 implements KeyListener, ActionListener {
                     SusteamSdk.updateUserAchievementProcess("大展身手", progress.get() + 1);
                 }
             });
-        } else if (score == 5000) {
+        } else if (pre_score < 5000 && score == 5000) {
             AtomicInteger progress = new AtomicInteger();
             SusteamSdk.getUserAchievementProcess("炉火纯青").onComplete(it -> {
                 if (it.result() != null) {
