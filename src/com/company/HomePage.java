@@ -58,11 +58,16 @@ public class HomePage {
         jlb[5].setFont(f);
         jp[5].add(jlb[5]);
 
+        final Font ff = new Font("宋体", Font.BOLD, 40);
+
         jp[6].setBounds(0, 300, 565, 100);
-        jlb[6] = new JLabel("最高得分: " + user.score, JLabel.CENTER);
-        f = new Font("宋体", Font.BOLD, 40);
-        jlb[6].setForeground(Color.YELLOW);
-        jlb[6].setFont(f);
+        jlb[6] = new JLabel();
+        jp[6].add(jlb[6]);
+        SusteamSdk.getUserMaxScore().onComplete(it -> {
+            jlb[6].setText("最高得分: " + it.result());
+            jlb[6].setForeground(Color.YELLOW);
+            jlb[6].setFont(ff);
+        });
 
 
         Font f2 = new Font("宋体", Font.BOLD, 40);
@@ -112,6 +117,18 @@ public class HomePage {
                             new showAchievements(name, it.result(), 0);
                         }
                     });
+                });
+            }
+        });
+
+        jbt[3].setText("排行");
+        jbt[3].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable(){
+                    public void run() {
+                        new Rank(name);
+                    }
                 });
             }
         });

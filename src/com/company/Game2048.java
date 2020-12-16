@@ -225,7 +225,7 @@ public class Game2048 implements KeyListener, ActionListener {
                     "game over",
                     JOptionPane.INFORMATION_MESSAGE
             );
-            recordScore(score, name);
+            recordScore(score);
         }
     }
 
@@ -234,7 +234,6 @@ public class Game2048 implements KeyListener, ActionListener {
         downMovable = false;
         rightMovable = false;
         leftMovable = false;
-        //to know about right move
         int fir, sec;
         x:
         {
@@ -679,8 +678,8 @@ public class Game2048 implements KeyListener, ActionListener {
         return new Player(name, 0);
     }
 
-    public void recordScore(int score, String username) {
-        //TODO
+    public void recordScore(int score) {
+        SusteamSdk.addRecord(score);
     }
 
     public void notifySaved() {
@@ -724,4 +723,3 @@ public class Game2048 implements KeyListener, ActionListener {
     }
 
 }
-

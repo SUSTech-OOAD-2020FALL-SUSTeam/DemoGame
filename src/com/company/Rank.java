@@ -1,10 +1,12 @@
 package com.company;
 
+import susteam.sdk.SusteamSdk;
+import susteam.sdk.Record;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class Rank {
     JFrame jf;
@@ -45,7 +47,7 @@ public class Rank {
 
         jlb[1].setText("排名");
         jlb[2].setText("用户名");
-        jlb[3].setText("最高得分");
+        jlb[3].setText("得分");
         jlb[1].setFont(f2);
         jlb[2].setFont(f2);
         jlb[3].setFont(f2);
@@ -54,13 +56,15 @@ public class Rank {
             jp[i].setBounds( ((i-1)%3)*170, 30+((i-1)/3)*45, 170,45);
         }
 
-        Player[] p = getTop10();
-        for( int i = 0; i < 10; i++ ) {
-            jlb[(i+1)*3+1].setText(""+(i+1));
-            jlb[(i+1)*3+2].setText(p[i].name);
-            jlb[(i+1)*3+3].setText(""+p[i].score);
+        SusteamSdk.getRank(10).onComplete(it -> {
+            Record[] records = it.result();
+            for (int i = 0; i < records.length; i++) {
+                jlb[(i+1)*3+1].setText(""+(i+1));
+                jlb[(i+1)*3+2].setText(records[i].getUsername());
+                jlb[(i+1)*3+3].setText(""+records[i].getScore());
+            }
+        });
 
-        }
         for (int i = 0; i < 4; i++) {
             jbt[i] = new JButton();
             jbt[i].setSize(100, 100);
@@ -85,15 +89,5 @@ public class Rank {
         for (int i = 0; i < 1; i++) {
             jp[i].add(jbt[i]);
         }
-    }
-
-    public Player[] getTop10() {
-        //TODO
-        Player[] p = new Player[10];
-        for( int i = 0; i < 10; i++ ) {
-            p[i] = new Player("test"+i,i);
-        }
-        Arrays.sort(p);
-        return p;
     }
 }
