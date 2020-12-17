@@ -13,9 +13,9 @@ import java.util.Arrays;
 public class HomePage {
     String name;
     JFrame jf;
-    JPanel jp[] = new JPanel[10];
-    JLabel jlb[] = new JLabel[10];
-    JButton jbt[] = new JButton[4];
+    JPanel jp[] = new JPanel[20];
+    JLabel jlb[] = new JLabel[20];
+    JButton jbt[] = new JButton[20];
 
     public HomePage(String username) {
         this.name = username;
@@ -30,7 +30,7 @@ public class HomePage {
         Container c = jf.getContentPane();
         c.setBackground(new Color(51, 51, 51));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             jp[i] = new JPanel();
             jp[i].setLayout(new GridBagLayout());
             jp[i].setOpaque(true);
@@ -43,6 +43,11 @@ public class HomePage {
         jp[1].setBounds(150, 420, 120, 120);
         jp[2].setBounds(285, 420, 120, 120);
         jp[3].setBounds(420, 420, 120, 120);
+
+        jp[10].setBounds(15, 535, 120, 120);
+        jp[11].setBounds(150, 535, 120, 120);
+        jp[12].setBounds(285, 535, 120, 120);
+        jp[13].setBounds(420, 535, 120, 120);
 
         jp[4].setBounds(0, 100, 565, 100);
         jlb[4] = new JLabel("2048", JLabel.CENTER);
@@ -125,6 +130,7 @@ public class HomePage {
         jbt[3].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                jf.dispose();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run() {
                         new Rank(name);
@@ -135,6 +141,76 @@ public class HomePage {
 
 
         for (int i = 0; i < 4; i++) {
+            jp[i].add(jbt[i]);
+        }
+
+        for (int i = 10; i < 14; i++) {
+            jbt[i] = new JButton();
+            jbt[i].setSize(100, 100);
+            jbt[i].setForeground(Color.BLACK);
+            jbt[i].setFont(f2);
+        }
+
+        jbt[10].setText("好友");
+        jbt[10].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SusteamSdk.friends().onSuccess(it -> {
+                    jf.dispose();
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            new showFriends(name, it.clone(), 0);
+                        }
+                    });
+                });
+            }
+        });
+
+//        jbt[11].setText("加载");
+//        jbt[11].addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SusteamSdk.getAllGameSaveName().onComplete(it -> {
+//                    jf.dispose();
+//                    SwingUtilities.invokeLater(new Runnable() {
+//                        public void run() {
+//                            new showSaves(name, it.result(), 0);
+//                        }
+//                    });
+//                });
+//            }
+//        });
+//
+//        jbt[12].setText("成就");
+//        jbt[12].addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SusteamSdk.getAllAchievement().onComplete(it -> {
+//                    jf.dispose();
+//                    SwingUtilities.invokeLater(new Runnable() {
+//                        public void run() {
+//                            new showAchievements(name, it.result(), 0);
+//                        }
+//                    });
+//                });
+//            }
+//        });
+//
+//        jbt[13].setText("排行");
+//        jbt[13].addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                jf.dispose();
+//                SwingUtilities.invokeLater(new Runnable(){
+//                    public void run() {
+//                        new Rank(name);
+//                    }
+//                });
+//            }
+//        });
+
+
+        for (int i = 10; i < 14; i++) {
             jp[i].add(jbt[i]);
         }
     }
