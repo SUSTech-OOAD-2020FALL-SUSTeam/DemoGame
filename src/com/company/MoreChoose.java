@@ -99,7 +99,7 @@ class moreChoose {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new HomePage(name, DLC);
+                        new HomePage(name, false);
                     }
                 });
             }
@@ -116,7 +116,7 @@ class moreChoose {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new HomePage(name, DLC);
+                        new HomePage(name, true);
                     }
                 });
             }
