@@ -22,7 +22,7 @@ public class Game2048 implements KeyListener, ActionListener {
     JButton jbt[] = new JButton[4];
     JLabel jlt = new JLabel("当前得分: 0");
 
-    public Game2048(String name) {
+    public Game2048(String name, boolean DLC) {
         this.name = name;
         jf = new JFrame("2048");
         jf.setSize(565, 815);
@@ -118,7 +118,7 @@ public class Game2048 implements KeyListener, ActionListener {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new HomePage(name);
+                        new HomePage(name, DLC);
                     }
                 });
             }

@@ -17,7 +17,7 @@ public class Main {
         SusteamSdk.user().onFailure(Throwable::printStackTrace).onSuccess(it -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    new HomePage(it.getUsername());
+                    new HomePage(it.getUsername(), false);
                 }
             });
         });

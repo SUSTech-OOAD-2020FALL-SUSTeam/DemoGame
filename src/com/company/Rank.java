@@ -15,7 +15,7 @@ public class Rank {
     JLabel jlb[] = new JLabel[40];
     JButton jbt[] = new JButton[4];
 
-    public Rank(String name) {
+    public Rank(String name, boolean DLC) {
         this.name = name;
         jf = new JFrame("2048");
         jf.setSize(565, 815);
@@ -80,7 +80,7 @@ public class Rank {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new HomePage(name);
+                        new HomePage(name, DLC);
                     }
                 });
             }

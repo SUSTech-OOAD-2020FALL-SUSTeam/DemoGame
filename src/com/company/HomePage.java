@@ -17,7 +17,7 @@ public class HomePage {
     JLabel jlb[] = new JLabel[20];
     JButton jbt[] = new JButton[20];
 
-    public HomePage(String username) {
+    public HomePage(String username, boolean DLC) {
         this.name = username;
         Player user = Game2048.getPlayer(username);
         jf = new JFrame("2048");
@@ -90,7 +90,7 @@ public class HomePage {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new Game2048(name);
+                        new Game2048(name, DLC);
                     }
                 });
             }
@@ -104,7 +104,7 @@ public class HomePage {
                     jf.dispose();
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            new showSaves(name, it.result(), 0);
+                            new showSaves(name, it.result(), 0, DLC);
                         }
                     });
                 });
@@ -119,7 +119,7 @@ public class HomePage {
                     jf.dispose();
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            new showAchievements(name, it.result(), 0);
+                            new showAchievements(name, it.result(), 0, DLC);
                         }
                     });
                 });
@@ -133,7 +133,7 @@ public class HomePage {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run() {
-                        new Rank(name);
+                        new Rank(name, DLC);
                     }
                 });
             }
@@ -155,31 +155,30 @@ public class HomePage {
         jbt[10].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SusteamSdk.friends().onSuccess(it -> {
+                SusteamSdk.gameFriends().onSuccess(it -> {
                     jf.dispose();
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            new showFriends(name, it.clone(), 0);
+                            new showFriends(name, it.clone(), 0, DLC);
                         }
                     });
                 });
             }
         });
 
-//        jbt[11].setText("加载");
-//        jbt[11].addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                SusteamSdk.getAllGameSaveName().onComplete(it -> {
-//                    jf.dispose();
-//                    SwingUtilities.invokeLater(new Runnable() {
-//                        public void run() {
-//                            new showSaves(name, it.result(), 0);
-//                        }
-//                    });
-//                });
-//            }
-//        });
+        jbt[11].setText("更多");
+        jbt[11].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jf.dispose();
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new moreChoose(name, true, DLC);
+                    }
+                });
+
+            }
+        });
 //
 //        jbt[12].setText("成就");
 //        jbt[12].addActionListener(new ActionListener() {

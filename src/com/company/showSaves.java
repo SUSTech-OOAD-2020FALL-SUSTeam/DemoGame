@@ -18,7 +18,7 @@ public class showSaves {
     JPanel jp[] = new JPanel[30];
     JButton jbt[] = new JButton[30];
 
-    public showSaves(String name, GameSave[] saves, int index) {
+    public showSaves(String name, GameSave[] saves, int index, boolean DLC) {
         this.name = name;
         jf = new JFrame("2048");
         jf.setSize(565, 815);
@@ -92,7 +92,7 @@ public class showSaves {
                             SwingUtilities.invokeLater(new Runnable(){
                                 public void run()
                                 {
-                                    new showSaves(name,it.result(),0);
+                                    new showSaves(name,it.result(),0, DLC);
                                 }
                             });
                         });
@@ -127,7 +127,7 @@ public class showSaves {
                             for( int j = 0; j < 16; j++ ) {
                                 if( board[j].equals("0") ) board[j] = "";
                             }
-                            Game2048 game = new Game2048(name);
+                            Game2048 game = new Game2048(name, DLC);
                             game.Load(board, name);
                         } catch (Exception exception) {
                             exception.printStackTrace();
@@ -152,7 +152,7 @@ public class showSaves {
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run()
                     {
-                        new showSaves(name, saves, index-5);
+                        new showSaves(name, saves, index-5, DLC);
                     }
                 });
             }
@@ -173,7 +173,7 @@ public class showSaves {
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run()
                     {
-                        new HomePage(name);
+                        new HomePage(name, DLC);
                     }
                 });
             }
@@ -193,7 +193,7 @@ public class showSaves {
                 SwingUtilities.invokeLater(new Runnable(){
                     public void run()
                     {
-                        new showSaves(name, saves, index+5);
+                        new showSaves(name, saves, index+5, DLC);
                     }
                 });
             }

@@ -16,7 +16,7 @@ public class showAchievements {
     JPanel jp[] = new JPanel[30];
     JButton jbt[] = new JButton[30];
 
-    public showAchievements(String name, Achievement[] achievements, int index) {
+    public showAchievements(String name, Achievement[] achievements, int index, boolean DLC) {
         this.name = name;
         jf = new JFrame("2048");
         jf.setSize(565, 815);
@@ -99,7 +99,7 @@ public class showAchievements {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new showAchievements(name, achievements, index - 5);
+                        new showAchievements(name, achievements, index - 5, DLC);
                     }
                 });
             }
@@ -119,7 +119,7 @@ public class showAchievements {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new HomePage(name);
+                        new HomePage(name, DLC);
                     }
                 });
             }
@@ -138,7 +138,7 @@ public class showAchievements {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new showAchievements(name, achievements, index + 5);
+                        new showAchievements(name, achievements, index + 5, DLC);
                     }
                 });
             }

@@ -18,7 +18,7 @@ public class showFriends {
     JPanel jp[] = new JPanel[30];
     JButton jbt[] = new JButton[30];
 
-    public showFriends(String name, Friend[] friends, int index) {
+    public showFriends(String name, Friend[] friends, int index, boolean DLC) {
         this.name = name;
         jf = new JFrame("2048");
         jf.setSize(565, 815);
@@ -77,7 +77,9 @@ public class showFriends {
             jlb[cur].setText(friendName);
             String statusText = "在线";
             if (!status) {
-                statusText = "上次在线：" + lastSeen;
+                if(lastSeen != null )
+                    statusText = "上次在线：" + lastSeen;
+                else statusText = "玩家未进行过游戏";
             }
             jlb[cur + 10].setText(statusText);
             int finalI = i;
@@ -109,7 +111,7 @@ public class showFriends {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new showFriends(name, friends, index - 5);
+                        new showFriends(name, friends, index - 5, DLC);
                     }
                 });
             }
@@ -129,7 +131,7 @@ public class showFriends {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new HomePage(name);
+                        new HomePage(name, DLC);
                     }
                 });
             }
@@ -148,7 +150,7 @@ public class showFriends {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new showFriends(name, friends, index + 5);
+                        new showFriends(name, friends, index + 5, DLC);
                     }
                 });
             }
