@@ -75,7 +75,7 @@ class moreChoose {
         jlb[1].setForeground(Color.GREEN);
         jp[1].add(jlb[1]);
 
-        jlb[2] = new JLabel("2048++");
+        jlb[2] = new JLabel("2048++(DLC)");
         jlb[2].setFont(f3);
         jlb[2].setForeground(Color.CYAN);
         jp[2].add(jlb[2]);
@@ -121,7 +121,8 @@ class moreChoose {
                 });
             }
         });
-        jp[5].add(jbt[5]);
+        if( have )
+            jp[5].add(jbt[5]);
 
         jp[24].setBounds(150, 0, 255, 100);
         jp[24].setBackground(new Color(51, 51, 51));

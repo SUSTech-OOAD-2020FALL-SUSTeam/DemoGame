@@ -150,7 +150,7 @@ public class showAchievements {
         jp[24].setBackground(new Color(51, 51, 51));
         jlb[29] = new JLabel("", JLabel.CENTER);
         Font f3 = new Font("Serif", Font.BOLD, 60);
-        jlb[29].setForeground(Color.ORANGE);
+        jlb[29].setForeground(Color.YELLOW);
         jlb[29].setFont(f3);
         jp[24].add(jlb[29]);
         jlb[29].setText("成就系统");

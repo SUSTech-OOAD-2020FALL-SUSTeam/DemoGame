@@ -53,6 +53,9 @@ public class HomePage {
         jlb[4] = new JLabel("2048", JLabel.CENTER);
         Font f = new Font("Serif", Font.BOLD, 80);
         jlb[4].setForeground(Color.YELLOW);
+        if(DLC) {
+            jlb[4].setText("2048++");
+        }
         jlb[4].setFont(f);
         jp[4].add(jlb[4]);
 
@@ -170,13 +173,15 @@ public class HomePage {
         jbt[11].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SusteamSdk.checkBought("Nrnte75QIWvFpZ1Q8FvfnOunATEI8hJ9yagXFXdA5sjG7FtBYGRE6fslZDqFkFYwg0qDXKHoge1hmZVDLHL3PpvAnRlURgcsPch9")
+                        .onComplete(it -> {
                 jf.dispose();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new moreChoose(name, true, DLC);
+                        new moreChoose(name, it.result(), DLC);
                     }
                 });
-
+            });
             }
         });
 //
