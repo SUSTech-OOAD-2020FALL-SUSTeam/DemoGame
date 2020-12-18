@@ -14,6 +14,7 @@ import javax.swing.*;
 
 public class Game2048 implements KeyListener, ActionListener {
     String name;
+    Boolean DLC;
     boolean upMovable = true, downMovable = true, rightMovable = true, leftMovable = true;
     JDialog jd;
     JFrame jf;
@@ -24,6 +25,7 @@ public class Game2048 implements KeyListener, ActionListener {
 
     public Game2048(String name, boolean DLC) {
         this.name = name;
+        this.DLC = DLC;
         jf = new JFrame("2048");
         jf.setSize(565, 815);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -226,6 +228,12 @@ public class Game2048 implements KeyListener, ActionListener {
                     JOptionPane.INFORMATION_MESSAGE
             );
             recordScore(score);
+            jf.dispose();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new HomePage(name, DLC);
+                }
+            });
         }
     }
 
