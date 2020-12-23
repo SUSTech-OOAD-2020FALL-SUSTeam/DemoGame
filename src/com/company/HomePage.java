@@ -214,7 +214,7 @@ public class HomePage {
 //        });
 
 
-        for (int i = 10; i < 14; i++) {
+        for (int i = 10; i < 12; i++) {
             jp[i].add(jbt[i]);
         }
     }

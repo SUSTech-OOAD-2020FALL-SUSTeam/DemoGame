@@ -135,7 +135,7 @@ public class Game2048 implements KeyListener, ActionListener {
             }
         });
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             jp[i + 16].add(jbt[i]);
         }
         Random r = new Random();
