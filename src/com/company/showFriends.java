@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class showFriends {
     String name;
@@ -77,11 +79,15 @@ public class showFriends {
             jlb[cur].setText(friendName);
             String statusText = "在线";
             if (!status) {
-                if(lastSeen != null )
-                    statusText = "上次在线：" + lastSeen;
+                if(lastSeen != null ) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+                    statusText = "上次在线：" + formatter.format(lastSeen);
+                }
                 else statusText = "玩家未进行过游戏";
             }
             jlb[cur + 10].setText(statusText);
+            jlb[cur + 10].setFont(new Font("宋体", Font.BOLD, 20));
+
             int finalI = i;
 
             jbt[cur * 2 + 1] = new JButton("邀请");
